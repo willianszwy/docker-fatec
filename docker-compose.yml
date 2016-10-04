@@ -1,0 +1,33 @@
+php:
+       build: ./php
+       volumes:
+        - ./www:/www
+nginx:
+        image: nginx:latest
+        ports:
+            - "8080:80"
+        volumes:
+            - ./www:/www
+            - ./nginx/site.conf:/etc/nginx/conf.d/site.conf
+        links:
+            - php
+        command: /bin/bash -c "nginx -g 'daemon off;'"
+
+
+mysql:
+        build: ./mysql
+        volumes:
+            - ./data:/data
+        environment:
+            MYSQL_DATABASE: homestead
+            MYSQL_USER: homestead
+            MYSQL_PASSWORD: secret
+            MYSQL_ROOT_PASSWORD: root
+
+
+
+
+
+
+
+
